@@ -1,8 +1,9 @@
 # trimble_to_solutions
-Download data from Trimble GNSS and go from T00 to Rinex. Then submit Rinex for Point Position Processing to get csv. 
+Goal of repo: Download data from Trimble GNSS and go from T00 to Rinex. Then submit Rinex for Point Position Processing to get csv. 
 
 
-To download the data from the Trimble instruments: 
+**To download the data from the Trimble instruments: 
+**
 
 You can enable/disable a session and also just look at the available files by connecting via browser which will bring you to a Trimble interface (see screenshot). Connect to the VPN with the IP address 192.168.1.1 (has to be different from the instrument which is usually 192.168.1.2). Subnet mask should be 255.255.255.0. Turn off internet, connect to the instrument with the ethernet cable, and go to browser and type https:192.168.1.2. 
 
@@ -11,8 +12,8 @@ To transfer a large amount of data, I used FileZilla. Connect to the instrument 
 Once you have all the T00 files, you will need to convert them to Rinex to look at the data. 
 
 
-To get solutions from T00 files: 
-
+**To get solutions from T00 files: 
+**
 T00 are the proprietary files from Trimble. To get Rinex files extracted from this format, you need runpkr and teqv. Both of which cant be downloaded on a Mac. You can use a Docker image from Matt Sigfried. I had to update this file to use an updated UNAVCO (EarthScope) link and mirrorlist. The updated dockerfile to build an image is in this directory. 
 
 To build image, run this in the same folder as the Dockerfile sits: 
