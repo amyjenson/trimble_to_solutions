@@ -14,6 +14,7 @@ Once you have all the T00 files, you will need to convert them to Rinex to look 
 
 **To get solutions from T00 files: 
 **
+
 T00 are the proprietary files from Trimble. To get Rinex files extracted from this format, you need runpkr and teqv. Both of which cant be downloaded on a Mac. You can use a Docker image from Matt Sigfried. I had to update this file to use an updated UNAVCO (EarthScope) link and mirrorlist. The updated dockerfile to build an image is in this directory. 
 
 To build image, run this in the same folder as the Dockerfile sits: 
