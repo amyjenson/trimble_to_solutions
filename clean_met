@@ -1,0 +1,9 @@
+dir=$1
+
+cd $dir
+files=$( ls *.*m )
+for file in $files; do
+   sed -i 's/-999/  9/g' $file
+done
+
+cd ../..

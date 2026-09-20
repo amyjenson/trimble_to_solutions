@@ -1,0 +1,46 @@
+name=$1
+
+cd $name
+
+mkdir -p dat
+mkdir -p rinex
+
+if [ "$2" = met ]; then
+   mkdir -p met
+fi
+
+for dir in 20????; do
+    cd $dir
+
+    for file in *.T00; do
+        runpkr00 -d $file
+    done
+
+    mv *.dat ../dat
+
+    cd ..
+done
+
+
+cd dat
+
+for file in *.dat; do
+
+    year=${file:4:4}
+    month=${file:8:2}
+    dom=${file:10:2}
+
+    day=$(date -d "$year-$month-$dom" +%j)
+
+    yy=${year:2:2}
+
+    metfile=$name$day'0.'$yy'm'
+    rinfile=$name$day'0.'$yy'o'
+   
+    if [ $2 = met ]; then
+       teqc -tr d +met ../met/$metfile $file > ../rinex/$rinfile
+    else
+       teqc -tr d $file > ../rinex/$rinfile
+    fi
+
+done

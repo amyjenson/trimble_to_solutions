@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Find all directories named "rinex"
+find . -type d -name "rinex" | while read -r rinex_dir; do
+    echo "Processing: $rinex_dir"
+
+    (
+        cd "$rinex_dir" || exit
+
+        # Check if there are any files ending in "o"
+        shopt -s nullglob
+        files=(*o)
+
+        if (( ${#files[@]} > 0 )); then
+            echo "  Creating rinex.zip"
+            zip rinex.zip "${files[@]}"
+        else
+            echo "  No .o files found"
+        fi
+    )
+done
+
+echo "Done."

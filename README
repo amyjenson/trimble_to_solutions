@@ -1,0 +1,34 @@
+To download the data from the Trimble instruments: 
+
+You can enable/disable a session and also just look at the available files by connecting via browser which will bring you to a Trimble interface (see screenshot). Connect to the VPN with the IP address 192.168.1.1 (has to be different from the instrument which is usually 192.168.1.2). Subnet mask should be 255.255.255.0. Turn off internet, connect to the instrument with the ethernet cable, and go to browser and type https:192.168.1.2. 
+
+To transfer a large amount of data, I used FileZilla. Connect to the instrument using an ethernet cable and then also type the typically IP address (192.168.1.2) into connect section. You have to turn wifi off to connect. I had to quit the program to connect to the next instrument (disconnecting isn't enough). 
+
+Once you have all the T00 files, you will need to convert them to Rinex to look at the data. 
+
+
+To get solutions from T00 files: 
+
+T00 are the proprietary files from Trimble. To get Rinex files extracted from this format, you need runpkr and teqv. Both of which cant be downloaded on a Mac. You can use a Docker image from Matt Sigfried. I had to update this file to use an updated UNAVCO (EarthScope) link and mirrorlist. The updated dockerfile to build an image is in this directory. 
+
+To build image, run this in the same folder as the Dockerfile sits: 
+
+docker build --platform linux/amd64 -t teqc .
+
+docker run -it --rm -v ~/:/home/user --name runpkr00 --platform linux/amd64 mrsiegfried/teqc-runpkr00:master
+
+Now in this you can run the convnetrs bash file to convert the T00 to dat and rinex files. 
+
+bash convnetrs <site folder name>
+
+If there is met data associated with it, use the met flag. 
+
+bash convnetrs <site folder name> met 
+
+Once you have the rinex files, send these files in a compressed format to PPP. I run the bash file called 'compress' which compressed all the rinex files in a given folder. The max that can be uploaded at once is 300 MB which is usually about one summers worth of data. 
+
+To submit to the Canadian resources for Point position processing (PPP), go to this website, sign in and then submit one zipped file for each site. Use 'Kinematic" and "ITRF". 
+
+https://webapp.csrs-scrs.nrcan-rncan.gc.ca/geod/tools-outils/ppp.php?locale=en&_gl=1*15f2fm1*_ga*NDI4NzE5MjgxLjE3ODQ3NDU1ODY.*_ga_C2N57Y7DX5*czE3ODQ3NDU1ODUkbzEkZzEkdDE3ODQ3NDU3NjIkajI3JGwwJGgw
+
+After each site is submitted, you will get back a compressed file that you can unzip with the bash file 'unzip'. This will give you a number of files including a csv where you can load position data from. 

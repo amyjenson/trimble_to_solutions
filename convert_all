@@ -1,0 +1,12 @@
+bash convnetrs N3
+
+bash convnetrs N4
+
+bash convnetrs S2
+
+bash convnetrs S3 
+
+bash convnetrs S4_S5 met
+
+bash convnetrs S1 met 
+ 

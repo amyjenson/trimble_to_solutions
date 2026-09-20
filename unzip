@@ -1,0 +1,3 @@
+for f in *.zip; do
+    unzip -o "$f"
+done
